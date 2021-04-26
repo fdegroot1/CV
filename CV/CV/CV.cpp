@@ -9,27 +9,26 @@ using namespace std;
 
 /////////////////  Images  //////////////////////
 
-float w = 250, h = 500;
-Mat matrix, imgWarp;
-
 void main() {
 	//Path to my image
-	string path = "Resources/ds2.jpg";
+	string path = "Resources/ballsandstripes.png";
 	//Load in the image
 
+	
+	
 	Mat img = imread(path);
-	Mat resizedImage;
-	Size size(img.size().width/4, img.size().height/4);
-	resize(img, resizedImage, size);
+	Mat thresholdImg;
+	threshold(img,thresholdImg,127, 1, THRESH_BINARY_INV);
+	Mat erosionImg, dilateImg;
 
-	Point2f src[4] = { {90,1950},{1160,1220}, {1500,3900},{2500,3160} };
-	Point2f dst[4] = { {0.0f,0.0f},{w,0.0f},{0.0f,h},{w,h} };
+	Mat element = getStructuringElement(MORPH_RECT, Size(5, 5), Point(-1, -1));
 
-	matrix = getPerspectiveTransform(src, dst);
-	warpPerspective(img, imgWarp, matrix,Point(w,h));
-	//Show the image
-	imshow("Image", resizedImage);
-	imshow("Image Warp", imgWarp);
+	erode(thresholdImg, erosionImg, element);
+	dilate(erosionImg, dilateImg, element);
+
+	imshow("Image", img);
+	imshow("Image E", erosionImg*255);
+	imshow("Image D", dilateImg*255);
 	waitKey(0);
 
 }
