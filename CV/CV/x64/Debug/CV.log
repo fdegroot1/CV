@@ -1,0 +1,14 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(491,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (OriginalImage.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  CV.cpp
+D:\Avans Hogeschool\Jaar 2\Periode 4\CV\CV\CV.cpp(15,13): warning C4326: return type of 'main' should be 'int' instead of 'void'
+D:\Avans Hogeschool\Jaar 2\Periode 4\CV\CV\CV.cpp(29,47): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\Avans Hogeschool\Jaar 2\Periode 4\CV\CV\CV.cpp(29,45): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+  CV.vcxproj -> D:\Avans Hogeschool\Jaar 2\Periode 4\CV\x64\Debug\CV.exe
