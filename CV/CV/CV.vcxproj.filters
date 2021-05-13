@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CV.cpp">
+    <ClCompile Include="LicensePlate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
