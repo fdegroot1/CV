@@ -10,6 +10,16 @@ using namespace std;
 
 ///////////////  Project 3 - License Plate Detector //////////////////////
 
+struct Left_Right_contour_sorter // 'less' for contours
+{
+	bool operator ()(const vector<Point>& a, const vector<Point>& b)
+	{
+		Rect ra(boundingRect(a));
+		Rect rb(boundingRect(b));
+		return (ra.x < rb.x);
+	}
+};
+
 void main() {
 
 	Mat web;
@@ -27,6 +37,8 @@ void main() {
 
 	while (true) {
 
+		int plateLetterNumber = 0;
+		int plateNumber = 0;
 		cap.read(web);
 		plateCascade.detectMultiScale(web, plates, 1.1, 10);
 
@@ -48,24 +60,27 @@ void main() {
 			vector<Vec4i> hierarchy;
 
 			findContours(imgT, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+			sort(contours.begin(), contours.end(), Left_Right_contour_sorter());
 
 			for (int j = 0; j < contours.size(); j++) {
 				int area = contourArea(contours[j]);
-				cout << area << endl;
 				vector<Rect> boundRect(contours.size());
 
 				boundRect[j]= boundingRect(contours[j]);
 				//rectangle(imgCrop, boundRect[j].tl(), boundRect[j].br(), Scalar(0, 255, 0), 5);
 				//drawContours(imgCrop, contours, j, Scalar(0, 255, 0), 2);
-				Rect crop_region(boundRect[j].tl(), boundRect[j].br());
-				Mat letter = imgCrop(crop_region);
-				imwrite("Resources/Plates/nummerbord" + to_string(i) + "_" + to_string(j)+".png",letter);
-				imshow("leter", letter);
+				if (area < 5000 && area >300) {
+					Rect crop_region(boundRect[j].tl(), boundRect[j].br());
+					Mat letter = imgCrop(crop_region);
+					imwrite("Resources/Plates/nummerbord" + to_string(plateNumber) + "_" + to_string(plateLetterNumber)+".png",letter);
+					cout << "Resources/Plates/nummerbord" + to_string(plateNumber) + "_" + to_string(plateLetterNumber) + " area:" + to_string(area) << endl;
+					imshow("letter", letter);
+					plateLetterNumber++;
+				}
+				
 				
 			}
-
-
-
+			plateNumber++;
 		}
 
 		imshow("Web", web);
